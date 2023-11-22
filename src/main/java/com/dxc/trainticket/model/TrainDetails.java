@@ -22,9 +22,12 @@ public class TrainDetails {
 	@GeneratedValue
 	private Integer trainId;
 	private String trainName;
+	private String trainNumber;
 	private String source;
 	private String destination;
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	private String classes;
+	private String quota;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private String date;
 	private String departure;
 	private String arrival;

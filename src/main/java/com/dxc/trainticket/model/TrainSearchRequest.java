@@ -13,5 +13,8 @@ public class TrainSearchRequest {
 
 	private String source;
 	private String destination;
+	private String classes;
+	private String quota;
 	private String date;
+	
 }

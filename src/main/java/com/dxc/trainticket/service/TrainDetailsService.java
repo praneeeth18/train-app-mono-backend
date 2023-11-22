@@ -2,6 +2,7 @@ package com.dxc.trainticket.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,14 @@ public class TrainDetailsService {
 		try {
 			var train = TrainDetails.builder()
 					.trainName(request.getTrainName())
+					.trainNumber(request.getTrainNumber())
 					.source(request.getSource())
 					.destination(request.getDestination())
+					.classes(request.getClasses())
+					.quota(request.getQuota())
 					.date(request.getDate())
+					.arrival(request.getArrival())
+					.departure(request.getDeparture())
 					.build();
 			trainDetailsRepository.save(train);
 			return new ResponseEntity<>("Train successfully added!", HttpStatus.OK);
@@ -54,5 +60,9 @@ public class TrainDetailsService {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
+	
+	public Optional<TrainDetails> getTrainById(int id) {
+		return trainDetailsRepository.findById(id);
+	}
 
 }

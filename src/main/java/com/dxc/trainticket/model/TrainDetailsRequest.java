@@ -11,7 +11,12 @@ import lombok.Setter;
 public class TrainDetailsRequest {
 	
 	private String trainName;
+	private String trainNumber;
 	private String source;
 	private String destination;
+	private String classes;
+	private String quota;
 	private String date;
+	private String departure;
+	private String arrival;
 }
