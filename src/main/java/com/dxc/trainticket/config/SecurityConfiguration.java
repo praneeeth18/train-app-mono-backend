@@ -30,6 +30,8 @@ public class SecurityConfiguration {
 				req
 				.requestMatchers("/api/v1/booking/**")
 				.permitAll()
+				.requestMatchers("/api/v1/trainDetails/**")
+				.permitAll()
 				.requestMatchers("/api/v1/auth/**")
 				.permitAll()
 				.anyRequest()

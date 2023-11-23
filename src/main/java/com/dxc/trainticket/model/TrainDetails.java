@@ -27,7 +27,7 @@ public class TrainDetails {
 	private String destination;
 	private String classes;
 	private String quota;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String date;
 	private String departure;
 	private String arrival;
