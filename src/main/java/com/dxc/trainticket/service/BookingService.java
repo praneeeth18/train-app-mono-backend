@@ -18,6 +18,7 @@ import com.dxc.trainticket.repository.BookingRepository;
 import com.dxc.trainticket.repository.TrainDetailsRepository;
 import com.dxc.trainticket.repository.UserRepository;
 
+
 @Service
 public class BookingService {
 	
@@ -46,7 +47,7 @@ public class BookingService {
     
     public ResponseEntity<Booking> makeBooking(BookingRequest bookingRequest) {
         // Retrieve user and train details from the database based on the IDs in the booking request
-        User user = userRepository.findById(bookingRequest.getUserId()).orElse(null);
+        User user = userRepository.findByEmail(bookingRequest.getUserEmail()).orElse(null);
         TrainDetails trainDetails = trainDetailsRepository.findById(bookingRequest.getTrainId()).orElse(null);
 
         // Check if user and train details exist
@@ -71,9 +72,10 @@ public class BookingService {
         
         //Create a new Booking object
         Booking booking = Booking.builder()
-                .userId(bookingRequest.getUserId())
+                .userEmail(bookingRequest.getUserEmail())
                 .trainDetails(trainDetails)
                 .passengers(passengers)
+                .price(bookingRequest.getPrice())
                 .build();
 
         // Save the booking to the database
@@ -87,4 +89,61 @@ public class BookingService {
     }
 
 
+    public ResponseEntity<Booking> updateBooking(int bookingId, BookingRequest updatedBookingRequest) {
+        // Check if the booking exists in the database
+        Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
+        if (optionalBooking.isPresent()) {
+            Booking existingBooking = optionalBooking.get();
+
+//            // Update fields if the new value is not null
+//            if (updatedBookingRequest.getUserId() != null) {
+//                existingBooking.setUserId(updatedBookingRequest.getUserId());
+//            }
+//            if (updatedBookingRequest.getTrainId() != null) {
+//                TrainDetails trainDetails = trainDetailsRepository.findById(updatedBookingRequest.getTrainId()).orElse(null);
+//                if (trainDetails != null) {
+//                    existingBooking.setTrainDetails(trainDetails);
+//                }
+//            }
+            if (updatedBookingRequest.getPrice() != null) {
+                existingBooking.setPrice(updatedBookingRequest.getPrice());
+            }
+            if (updatedBookingRequest.getStatus() != null) {
+                existingBooking.setStatus(updatedBookingRequest.getStatus());
+            }
+
+            // Update passenger details if provided
+            if (updatedBookingRequest.getPassengers() != null) {
+                List<Passenger> updatedPassengers = new ArrayList<>();
+                for (Passenger passengerDetails : updatedBookingRequest.getPassengers()) {
+                    Passenger passenger = Passenger.builder()
+                            .name(passengerDetails.getName())
+                            .gender(passengerDetails.getGender())
+                            .dob(passengerDetails.getDob())
+                            .phoneNumber(passengerDetails.getPhoneNumber())
+                            .build();
+                    updatedPassengers.add(passenger);
+                }
+                existingBooking.setPassengers(updatedPassengers);
+            }
+
+            // Save the updated booking to the database
+            Booking updatedBooking = bookingRepository.save(existingBooking);
+
+            return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    public ResponseEntity<List<Booking>> getBookingsByUserEmail(String userEmail) {
+        // Call the repository method to get bookings by user email
+        List<Booking> userBookings = bookingRepository.findByUserEmail(userEmail);
+
+        if (!userBookings.isEmpty()) {
+            return new ResponseEntity<>(userBookings, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

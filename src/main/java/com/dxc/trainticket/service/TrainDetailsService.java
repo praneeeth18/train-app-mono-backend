@@ -33,6 +33,7 @@ public class TrainDetailsService {
 					.date(request.getDate())
 					.arrival(request.getArrival())
 					.departure(request.getDeparture())
+					.price(request.getPrice())
 					.build();
 			trainDetailsRepository.save(train);
 			return new ResponseEntity<>("Train successfully added!", HttpStatus.OK);

@@ -26,7 +26,12 @@ public class Booking {
 	@Id
 	@GeneratedValue
 	private Integer bookingId;
-    private Integer userId;
+    private String userEmail;
+    private Integer price;
+    
+ // Set the default value of status as "PENDING"
+    @Builder.Default
+    private String status = "PENDING";
 	
 	@ManyToOne
     @JoinColumn(name = "train_id") // This is the foreign key to link Booking to TrainDetails

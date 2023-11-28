@@ -31,6 +31,7 @@ public class TrainDetails {
 	private String date;
 	private String departure;
 	private String arrival;
+	private Integer price;
 
 //	public String getFormattedDate() {
 //        return date;

@@ -13,7 +13,9 @@ import lombok.Setter;
 @Builder
 public class BookingRequest {
 
-	private Integer userId;
+	private String userEmail;
     private Integer trainId;
+    private Integer price;
+    private String status;
     private List<Passenger> passengers;
 }

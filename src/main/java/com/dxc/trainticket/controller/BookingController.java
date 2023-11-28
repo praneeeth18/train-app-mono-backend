@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,4 +42,13 @@ public class BookingController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 	
+	@PutMapping("/update/{bookingId}")
+    public ResponseEntity<Booking> updateBooking(@PathVariable int bookingId, @RequestBody BookingRequest updatedBookingRequest) {
+        return bookingService.updateBooking(bookingId, updatedBookingRequest);
+    }
+	
+	@GetMapping("/getBooking/{userEmail}")
+    public ResponseEntity<List<Booking>> getBookingsByUserEmail(@PathVariable String userEmail) {
+        return bookingService.getBookingsByUserEmail(userEmail);
+    }
 }

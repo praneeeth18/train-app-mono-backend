@@ -22,4 +22,5 @@ public class TrainDetailsRequest {
 	private String date;
 	private String departure;
 	private String arrival;
+	private Integer price;
 }
