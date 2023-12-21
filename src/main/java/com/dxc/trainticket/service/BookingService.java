@@ -76,6 +76,7 @@ public class BookingService {
                 .trainDetails(trainDetails)
                 .passengers(passengers)
                 .price(bookingRequest.getPrice())
+                .status(bookingRequest.getStatus())
                 .build();
 
         // Save the booking to the database
